@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { ChevronDown, ChevronUp } from "react-bootstrap-icons";
 import { GlobalContext } from "../../context/context";
 
-import { baseUrl } from '../../core.mjs';
- 
+import { baseUrl } from "../../core.mjs";
+
 const SingleComment = (props) => {
   let { state, dispatch } = useContext(GlobalContext);
 
@@ -25,7 +25,7 @@ const SingleComment = (props) => {
 
   return (
     <div className="singleComment">
-      {state.user.userId === props.userId || state.user.isAdmin == true ? (
+      {state.user.userId === props.userId || props.authorId === state.user.userId || state.user.isAdmin == true ? (
         <div className="actionContComment">
           {showAction ? (
             <>
@@ -35,13 +35,15 @@ const SingleComment = (props) => {
                 }}
               />
               <div className="commentMenu">
-                <p
-                  onClick={(event) => {
-                    props.edit(props._id, event);
-                  }}
-                >
-                  Edit
-                </p>
+                {(state.user.userId === props.userId) && (
+                  <p
+                    onClick={(event) => {
+                      props.edit(props._id, event);
+                    }}
+                  >
+                    Edit
+                  </p>
+                )}
 
                 <p
                   onClick={() => {
@@ -73,7 +75,7 @@ const SingleComment = (props) => {
       </div>
       <div className="commentTextContainer">
         <p className="commentText">
-        <span className="leftFloatComment">mm</span>
+          <span className="leftFloatComment">mm</span>
           <span>{showFullComment ? fullComment : splittedComment}</span>
           {splittedComment !== fullComment && (
             <span className="see" onClick={toggleShowFullComment}>

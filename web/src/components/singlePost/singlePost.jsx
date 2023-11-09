@@ -167,6 +167,7 @@ const SinglePost = () => {
     formData.append("userName", `${state.user.firstName} ${state.user.lastName}`);
     formData.append("postId", postId.postId);
     formData.append("comment", commentRef.current.value);
+    formData.append("authorId", post.userId);
 
     axios
       .post(`${baseUrl}/api/v1/comment`, formData, {
@@ -330,7 +331,7 @@ const SinglePost = () => {
         </form>
         {
           comments ? comments.map((comment, index) => (
-            <SingleComment userName={comment.userName} userId={comment.userId} image={comment.userImage} comment={comment.comment} time={comment.time} _id={comment._id} del={deleteComment} edit={editComment} />
+            <SingleComment key={index} authorId={comment.authorId} userName={comment.userName} userId={comment.userId} image={comment.userImage} comment={comment.comment} time={comment.time} _id={comment._id} del={deleteComment} edit={editComment} />
           )) : null
         }
       </div>

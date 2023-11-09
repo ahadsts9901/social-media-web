@@ -257,7 +257,7 @@ const Profile = () => {
             <h2 className="profileName">
               {profile.firstName} {profile.lastName}
               {state.user.userId === profile.userId ? (
-                <PencilFill className="pencil" />
+                <PencilFill style={{fontSize: "0.5em"}} className="pencil" />
               ) : null}
             </h2>
 
@@ -280,7 +280,7 @@ const Profile = () => {
             <div className="profileImageContainer">
               <label className="editIMG" htmlFor="profileImage">
                 {state.user.userId === profile.userId ? (
-                  <PencilFill className="pencil" />
+                  <PencilFill style={{fontSize:"0.8em"}} className="pencil" />
                 ) : null}
               </label>
               <input

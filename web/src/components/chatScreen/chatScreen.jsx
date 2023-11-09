@@ -217,45 +217,45 @@ const ChatScreen = () => {
     });
   }
 
-  // function clearChat(from_id, to_id) {
-  //   Swal.fire({
-  //     title: "Clear chat ?",
-  //     text: "Do you want to clear chat ?",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     cancelButtonText: "Cancel",
-  //     confirmButtonText: "Delete",
-  //     showConfirmButton: true,
-  //     confirmButtonColor: "#284352",
-  //     showCancelButton: true,
-  //     cancelButtonColor: "#284352",
-  //     showLoaderOnConfirm: true,
-  //     preConfirm: async () => {
-  //       try {
-  //         const response = await axios.delete(
-  //           `${baseUrl}/api/v1/messages/${from_id}/${to_id}`
-  //         );
-  //         // console.log(response.data);
-  //         Swal.fire({
-  //           icon: "success",
-  //           title: "Chat cleared",
-  //           timer: 1000,
-  //           showCancelButton: false,
-  //           showConfirmButton: false,
-  //         });
-  //         setShowMenu(false);
-  //       } catch (error) {
-  //         console.log(error.data);
-  //         Swal.fire({
-  //           icon: "error",
-  //           title: "Failed to delete message",
-  //           text: error.data,
-  //           showConfirmButton: false,
-  //         });
-  //       }
-  //     },
-  //   });
-  // }
+  function clearChat(from_id, to_id) {
+    Swal.fire({
+      title: "Clear chat ?",
+      text: "Do you want to clear chat ?",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "Cancel",
+      confirmButtonText: "Delete",
+      showConfirmButton: true,
+      confirmButtonColor: "#284352",
+      showCancelButton: true,
+      cancelButtonColor: "#284352",
+      showLoaderOnConfirm: true,
+      preConfirm: async () => {
+        try {
+          const response = await axios.delete(
+            `${baseUrl}/api/v1/messages/${from_id}/${to_id}`
+          );
+          // console.log(response.data);
+          Swal.fire({
+            icon: "success",
+            title: "Chat cleared",
+            timer: 1000,
+            showCancelButton: false,
+            showConfirmButton: false,
+          });
+          setShowMenu(false);
+        } catch (error) {
+          console.log(error.data);
+          Swal.fire({
+            icon: "error",
+            title: "Failed to delete message",
+            text: error.data,
+            showConfirmButton: false,
+          });
+        }
+      },
+    });
+  }
 
   return (
     <div className="chat">
@@ -289,9 +289,9 @@ const ChatScreen = () => {
           {!showMenu ? null : (
             <div className="chatMenu">
               <p
-                // onClick={() => {
-                //   clearChat(state.user.userId, userId);
-                // }}
+                onClick={() => {
+                  clearChat(state.user.userId, userId);
+                }}
               >
                 Clear Chat
               </p>
