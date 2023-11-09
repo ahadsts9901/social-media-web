@@ -34,29 +34,38 @@ const ChatScreen = () => {
 
   useEffect(() => {
 
+  const fetchData = async () => {
     const socket = io(baseUrl);
+
     socket.on('connect', function () {
       console.log("connected")
     });
+
     socket.on('disconnect', function (message) {
       console.log("Socket disconnected from server: ", message);
     });
 
-    socket.on(state.user.userId, (e) => {
+    socket.on(state.user.userId, async (e) => {
       console.log("a new message for you: ", e);
-      setMessages((prev) => {
-        return [e, ...prev]
-      });
 
-    })
+      try {
+        const response = await axios.get(`${baseUrl}/api/v1/messages/${userId}`);
+        setMessages([...response.data]);
+      } catch (error) {
+        console.log(error);
+      }
+    });
 
     return () => {
-
       // cleanup function
       socket.close();
+    };
+  };
 
-    }
-  }, [])
+  fetchData();
+
+}, []);
+
 
   // =====================================================================================
 

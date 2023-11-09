@@ -14,6 +14,7 @@ const Post = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    
     if (!Array.isArray(props.likedBy)) {
       props.likedBy = [];
     }
@@ -57,7 +58,7 @@ const Post = (props) => {
 
       if (userHasLiked) {
         // console.log("You've already liked this post.");
-        undoLike(_id);
+        undoLike(_id, event);
         return;
       }
 

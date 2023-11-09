@@ -52,7 +52,7 @@ const UserPost = (props) => {
 
       if (userHasLiked) {
         // console.log("You've already liked this post.");
-        undoLike(_id);
+        undoLike(_id,event);
         return;
       }
 
