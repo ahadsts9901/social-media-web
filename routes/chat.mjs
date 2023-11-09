@@ -194,27 +194,27 @@ router.put('/message/:messageId', async (req, res, next) => {
 //   }
 // });
 
-// router.delete('/messages/:from_id/:to_id', async (req, res, next) => {
-//   const from_id = new ObjectId(req.params.from_id);
-//   const to_id = new ObjectId(req.params.to_id);
+router.delete('/messages/:from_id/:to_id', async (req, res, next) => {
+  const from_id = new ObjectId(req.params.from_id);
+  const to_id = new ObjectId(req.params.to_id);
 
-//   try {
-//     const deleteResponse = await chatCol.deleteMany({
-//       $or: [
-//         { from_id: from_id, to_id: to_id },
-//         { from_id: to_id, to_id: from_id }
-//       ]
-//     });
+  try {
+    const deleteResponse = await chatCol.deleteMany({
+      $or: [
+        { from_id: from_id, to_id: to_id },
+        { from_id: to_id, to_id: from_id }
+      ]
+    });
 
-//     if (deleteResponse.deletedCount > 0) {
-//       res.send(`${deleteResponse.deletedCount} messages deleted successfully.`);
-//     } else {
-//       res.send('No messages found to delete.');
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send('Internal Server Error');
-//   }
-// });
+    if (deleteResponse.deletedCount > 0) {
+      res.send(`${deleteResponse.deletedCount} messages deleted successfully.`);
+    } else {
+      res.send('No messages found to delete.');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 export default router;
