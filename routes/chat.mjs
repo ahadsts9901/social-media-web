@@ -51,6 +51,8 @@ router.post('/message', (req, res, next) => {
     to_id: new ObjectId(req.body.to_id),
     message: req.body.chatMessage,
     time: new Date(),
+    deletedFor : [],
+    unsend : false
   }
 
   try {
@@ -172,27 +174,47 @@ router.put('/message/:messageId', async (req, res, next) => {
   }
 });
 
-router.delete('/messages/:from_id/:to_id', async (req, res, next) => {
-  const from_id = new ObjectId(req.params.from_id);
-  const to_id = new ObjectId(req.params.to_id);
+// router.put('/message/everyone/:messageId', async (req, res, next) => {
 
-  try {
-    const deleteResponse = await chatCol.deleteMany({
-      $or: [
-        { from_id: from_id, to_id: to_id },
-        { from_id: to_id, to_id: from_id }
-      ]
-    });
+//   const messageId = new ObjectId(req.params.messageId);
+//   const { message } = req.body;
 
-    if (deleteResponse.deletedCount > 0) {
-      res.send(`${deleteResponse.deletedCount} messages deleted successfully.`);
-    } else {
-      res.send('No messages found to delete.');
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-});
+//   console.log("message", message);
+
+//   try {
+//     const updateResponse = await chatCol.updateOne({ _id: messageId }, { $set: { unsend : true } });
+
+//     if (updateResponse.matchedCount === 1) {
+//       res.send(`Message with id ${messageId} unsend successfully.`);
+//     } else {
+//       res.send('Message not found with the given id.');
+//     }
+//   } catch (error) {
+//     console.error(error);
+//   }
+// });
+
+// router.delete('/messages/:from_id/:to_id', async (req, res, next) => {
+//   const from_id = new ObjectId(req.params.from_id);
+//   const to_id = new ObjectId(req.params.to_id);
+
+//   try {
+//     const deleteResponse = await chatCol.deleteMany({
+//       $or: [
+//         { from_id: from_id, to_id: to_id },
+//         { from_id: to_id, to_id: from_id }
+//       ]
+//     });
+
+//     if (deleteResponse.deletedCount > 0) {
+//       res.send(`${deleteResponse.deletedCount} messages deleted successfully.`);
+//     } else {
+//       res.send('No messages found to delete.');
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
 
 export default router;
