@@ -38,15 +38,15 @@ const ChatScreen = () => {
       const socket = io(baseUrl);
 
       socket.on('connect', function () {
-        console.log("connected")
+        // console.log("connected")
       });
 
       socket.on('disconnect', function (message) {
-        console.log("Socket disconnected from server: ", message);
+        // console.log("Socket disconnected from server: ", message);
       });
 
       socket.on(state.user.userId, async (e) => {
-        console.log("a new message for you: ", e);
+        // console.log("a new message for you: ", e);
 
         try {
           const response = await axios.get(`${baseUrl}/api/v1/messages/${userId}`);
@@ -105,7 +105,7 @@ const ChatScreen = () => {
         toast: true,
         position: "top-end",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 1200,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.onmouseenter = Swal.stopTimer;
@@ -116,6 +116,20 @@ const ChatScreen = () => {
         // icon: "success",
         title: "Message sent"
       });
+
+      const sentNotification = await axios.post(
+        `${baseUrl}/api/v1/notification`,
+        {
+          fromId: state.user.userId,
+          toId: userId,
+          actionId: state.user.userId,
+          message: `${state.user.firstName} ${state.user.lastName} just messaged you`,
+          senderImage: state.user.profileImage,
+          senderName: `${state.user.firstName} ${state.user.lastName}`,
+          location: "chat"
+        }
+      );
+
       getMessages();
 
       chatText.current.value = ""; // Clear chat input field
@@ -156,7 +170,7 @@ const ChatScreen = () => {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 1200,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.onmouseenter = Swal.stopTimer;
@@ -220,7 +234,7 @@ const ChatScreen = () => {
               toast: true,
               position: "top-end",
               showConfirmButton: false,
-              timer: 3000,
+              timer: 1200,
               timerProgressBar: true,
               didOpen: (toast) => {
                 toast.onmouseenter = Swal.stopTimer;
@@ -274,7 +288,7 @@ const ChatScreen = () => {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 1200,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.onmouseenter = Swal.stopTimer;

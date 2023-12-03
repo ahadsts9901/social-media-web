@@ -10,7 +10,7 @@ import Swal from "sweetalert2"
 import SingleComment from "../singleComment/SingleComment"
 
 import { baseUrl } from '../../core.mjs';
- 
+
 const SinglePost = () => {
   let { state, dispatch } = useContext(GlobalContext);
   const [post, setPost] = useState();
@@ -68,7 +68,7 @@ const SinglePost = () => {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 1200,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.onmouseenter = Swal.stopTimer;
@@ -88,8 +88,8 @@ const SinglePost = () => {
             timer: 2000,
             showConfirmButton: false,
             showCancelButton: true,
-            cancelButtonColorL:"#284352",
-            cancelButtonText:"Ok"
+            cancelButtonColorL: "#284352",
+            cancelButtonText: "Ok"
           });
         }
       }
@@ -132,7 +132,7 @@ const SinglePost = () => {
                   toast: true,
                   position: "top-end",
                   showConfirmButton: false,
-                  timer: 3000,
+                  timer: 1200,
                   timerProgressBar: true,
                   didOpen: (toast) => {
                     toast.onmouseenter = Swal.stopTimer;
@@ -153,8 +153,8 @@ const SinglePost = () => {
                   timer: 2000,
                   showConfirmButton: false,
                   showCancelButton: true,
-                  cancelButtonColorL:"#284352",
-                  cancelButtonText:"Ok"
+                  cancelButtonColorL: "#284352",
+                  cancelButtonText: "Ok"
                 });
               });
           }
@@ -171,7 +171,7 @@ const SinglePost = () => {
 
   // comment
 
-  const doComment = (event) => {
+  const doComment = async (event) => {
 
     event.preventDefault();
 
@@ -194,13 +194,13 @@ const SinglePost = () => {
       .post(`${baseUrl}/api/v1/comment`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
-      .then(function (response) {
+      .then(async function (response) {
         // console.log(response.data);
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
           showConfirmButton: false,
-          timer: 3000,
+          timer: 1200,
           timerProgressBar: true,
           didOpen: (toast) => {
             toast.onmouseenter = Swal.stopTimer;
@@ -211,6 +211,20 @@ const SinglePost = () => {
           // icon: "success",
           title: "Comment added"
         });
+
+        const sentNotification = await axios.post(
+          `${baseUrl}/api/v1/notification`,
+          {
+            fromId: state.user.userId,
+            toId: post.userId,
+            actionId: post._id,
+            message: `${state.user.firstName} ${state.user.lastName} commented on your post`,
+            senderImage: state.user.profileImage,
+            senderName: `${state.user.firstName} ${state.user.lastName}`,
+            location: "post"
+          }
+        );
+
         getComments(postId.postId)
       })
       .catch(function (error) {
@@ -221,8 +235,8 @@ const SinglePost = () => {
           timer: 2000,
           showConfirmButton: false,
           showCancelButton: true,
-          cancelButtonColorL:"#284352",
-          cancelButtonText:"Ok"
+          cancelButtonColorL: "#284352",
+          cancelButtonText: "Ok"
         });
       });
 
@@ -261,7 +275,7 @@ const SinglePost = () => {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 1200,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.onmouseenter = Swal.stopTimer;
@@ -272,6 +286,34 @@ const SinglePost = () => {
             // icon: "success",
             title: "Comment deleted"
           });
+
+          if (state.user.isAdmin) {
+            await axios.post(
+              `${baseUrl}/api/v1/notification`,
+              {
+                fromId: state.user.userId,
+                toId: post.userId,
+                actionId: state.user.userId,
+                message: `"${state.user.firstName} ${state.user.lastName}" admin of "WE App" removed your comment`,
+                senderImage: state.user.profileImage,
+                senderName: `${state.user.firstName} ${state.user.lastName}`,
+                location: "profile"
+              }
+            )
+          } else {
+            const delNotification = await axios.delete(
+              `${baseUrl}/api/v1/delete/notification`,
+              {
+                data: {
+                  fromId: state.user.userId,
+                  toId: post.userId,
+                  actionId: post._id,
+                },
+              }
+            );
+          }
+
+          // console.log("notification deleted");
           getComments(postId.postId)
         } catch (error) {
           console.log(error.data);
@@ -281,8 +323,8 @@ const SinglePost = () => {
             timer: 2000,
             showConfirmButton: false,
             showCancelButton: true,
-            cancelButtonColorL:"#284352",
-            cancelButtonText:"Ok"
+            cancelButtonColorL: "#284352",
+            cancelButtonText: "Ok"
           });
         }
       }
@@ -324,7 +366,7 @@ const SinglePost = () => {
               toast: true,
               position: "top-end",
               showConfirmButton: false,
-              timer: 3000,
+              timer: 1200,
               timerProgressBar: true,
               didOpen: (toast) => {
                 toast.onmouseenter = Swal.stopTimer;
@@ -345,8 +387,8 @@ const SinglePost = () => {
               timer: 2000,
               showConfirmButton: false,
               showCancelButton: true,
-              cancelButtonColorL:"#284352",
-              cancelButtonText:"Ok"
+              cancelButtonColorL: "#284352",
+              cancelButtonText: "Ok"
             });
           });
       }

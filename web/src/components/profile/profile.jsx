@@ -76,7 +76,7 @@ const Profile = () => {
               toast: true,
               position: "top-end",
               showConfirmButton: false,
-              timer: 3000,
+              timer: 1200,
               timerProgressBar: true,
               didOpen: (toast) => {
                 toast.onmouseenter = Swal.stopTimer;
@@ -166,7 +166,7 @@ const Profile = () => {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 1200,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.onmouseenter = Swal.stopTimer;
@@ -215,7 +215,7 @@ const Profile = () => {
           const passwordElement = document.getElementById(inputId);
           const passwordValue = passwordElement.value.trim();
 
-          console.log("yes");
+          // console.log("yes");
 
           if (passwordValue === "" || passwordValue > 8) {
             passwordElement.classList.add("swal-validation-error");
@@ -276,7 +276,7 @@ const Profile = () => {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 1200,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.onmouseenter = Swal.stopTimer;
@@ -355,7 +355,7 @@ const Profile = () => {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 1200,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.onmouseenter = Swal.stopTimer;
@@ -420,7 +420,7 @@ const Profile = () => {
                   toast: true,
                   position: "top-end",
                   showConfirmButton: false,
-                  timer: 3000,
+                  timer: 1200,
                   timerProgressBar: true,
                   didOpen: (toast) => {
                     toast.onmouseenter = Swal.stopTimer;
@@ -523,7 +523,7 @@ const Profile = () => {
           const passwordElement = document.getElementById(inputId);
           const passwordValue = passwordElement.value.trim();
 
-          console.log("yes");
+          // console.log("yes");
 
           if (passwordValue === "" || passwordValue > 8) {
             passwordElement.classList.add("swal-validation-error");
@@ -567,7 +567,7 @@ const Profile = () => {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 1200,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.onmouseenter = Swal.stopTimer;
@@ -629,7 +629,7 @@ const Profile = () => {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 1200,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.onmouseenter = Swal.stopTimer;
